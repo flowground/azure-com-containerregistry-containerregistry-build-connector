@@ -1,0 +1,44 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        },
+        "registryName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 50,
+            "pattern": "^[a-zA-Z0-9]*$"
+        },
+        "requestBody": {
+            "description": "The request parameters for scheduling a run.",
+            "discriminator": {
+                "propertyName": "type"
+            },
+            "properties": {
+                "isArchiveEnabled": {
+                    "default": false,
+                    "description": "The value that indicates whether archiving is enabled for the run or not.",
+                    "type": "boolean"
+                },
+                "type": {
+                    "description": "The type of the run request.",
+                    "readOnly": true,
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

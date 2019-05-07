@@ -1,0 +1,379 @@
+{
+    "type": "object",
+    "properties": {
+        "subscriptionId": {
+            "required": true,
+            "type": "string"
+        },
+        "resourceGroupName": {
+            "required": true,
+            "type": "string",
+            "minLength": 1
+        },
+        "registryName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 50,
+            "pattern": "^[a-zA-Z0-9]*$"
+        },
+        "taskName": {
+            "required": true,
+            "type": "string",
+            "minLength": 5,
+            "maxLength": 50,
+            "pattern": "^[a-zA-Z0-9-_]*$"
+        },
+        "requestBody": {
+            "description": "The parameters for updating a task.",
+            "properties": {
+                "properties": {
+                    "description": "The properties for updating a task.",
+                    "x-ms-client-flatten": true,
+                    "properties": {
+                        "agentConfiguration": {
+                            "description": "The machine configuration of the run agent.",
+                            "properties": {
+                                "cpu": {
+                                    "description": "The CPU configuration in terms of number of cores required for the run.",
+                                    "format": "int32",
+                                    "type": "integer"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "credentials": {
+                            "description": "The parameters that describes a set of credentials that will be used when this run is invoked.",
+                            "properties": {
+                                "customRegistries": {
+                                    "additionalProperties": {
+                                        "description": "Describes the credentials that will be used to access a custom registry during a run.",
+                                        "properties": {
+                                            "password": {
+                                                "description": "The password for logging into the custom registry. The password is a secret \r\nobject that allows multiple ways of providing the value for it.",
+                                                "properties": {
+                                                    "type": {
+                                                        "description": "The type of the secret object which determines how the value of the secret object has to be\r\ninterpreted.",
+                                                        "enum": [
+                                                            "Opaque"
+                                                        ],
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "SecretObjectType"
+                                                        }
+                                                    },
+                                                    "value": {
+                                                        "description": "The value of the secret. The format of this value will be determined\r\nbased on the type of the secret object. If the type is Opaque, the value will be\r\nused as is without any modification.",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "userName": {
+                                                "description": "The username for logging into the custom registry.",
+                                                "properties": {
+                                                    "type": {
+                                                        "description": "The type of the secret object which determines how the value of the secret object has to be\r\ninterpreted.",
+                                                        "enum": [
+                                                            "Opaque"
+                                                        ],
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "SecretObjectType"
+                                                        }
+                                                    },
+                                                    "value": {
+                                                        "description": "The value of the secret. The format of this value will be determined\r\nbased on the type of the secret object. If the type is Opaque, the value will be\r\nused as is without any modification.",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "type": "object"
+                                    },
+                                    "description": "Describes the credential parameters for accessing other custom registries. The key\r\nfor the dictionary item will be the registry login server (myregistry.azurecr.io) and\r\nthe value of the item will be the registry credentials for accessing the registry.",
+                                    "type": "object"
+                                },
+                                "sourceRegistry": {
+                                    "description": "Describes the credential parameters for accessing the source registry.",
+                                    "properties": {
+                                        "loginMode": {
+                                            "description": "The authentication mode which determines the source registry login scope. The credentials for the source registry\r\nwill be generated using the given scope. These credentials will be used to login to\r\nthe source registry during the run.",
+                                            "enum": [
+                                                "None",
+                                                "Default"
+                                            ],
+                                            "type": "string",
+                                            "x-ms-enum": {
+                                                "modelAsString": true,
+                                                "name": "SourceRegistryLoginMode"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "platform": {
+                            "description": "The platform properties against which the run has to happen.",
+                            "properties": {
+                                "architecture": {
+                                    "description": "The OS architecture.",
+                                    "enum": [
+                                        "amd64",
+                                        "x86",
+                                        "arm"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "Architecture"
+                                    }
+                                },
+                                "os": {
+                                    "description": "The operating system type required for the run.",
+                                    "enum": [
+                                        "Windows",
+                                        "Linux"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "OS"
+                                    }
+                                },
+                                "variant": {
+                                    "description": "Variant of the CPU.",
+                                    "enum": [
+                                        "v6",
+                                        "v7",
+                                        "v8"
+                                    ],
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "Variant"
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "status": {
+                            "description": "The current status of task.",
+                            "enum": [
+                                "Disabled",
+                                "Enabled"
+                            ],
+                            "type": "string",
+                            "x-ms-enum": {
+                                "modelAsString": true,
+                                "name": "TaskStatus"
+                            }
+                        },
+                        "step": {
+                            "description": "The properties for updating a task step.",
+                            "discriminator": {
+                                "propertyName": "type"
+                            },
+                            "properties": {
+                                "contextAccessToken": {
+                                    "description": "The token (git PAT or SAS token of storage account blob) associated with the context for a step.",
+                                    "type": "string"
+                                },
+                                "contextPath": {
+                                    "description": "The URL(absolute or relative) of the source context for the task step.",
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "description": "The type of the step.",
+                                    "enum": [
+                                        "Docker",
+                                        "FileTask",
+                                        "EncodedTask"
+                                    ],
+                                    "readOnly": true,
+                                    "type": "string",
+                                    "x-ms-enum": {
+                                        "modelAsString": true,
+                                        "name": "StepType"
+                                    }
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "timeout": {
+                            "description": "Run timeout in seconds.",
+                            "format": "int32",
+                            "type": "integer"
+                        },
+                        "trigger": {
+                            "description": "The properties for updating trigger properties.",
+                            "properties": {
+                                "baseImageTrigger": {
+                                    "description": "The trigger based on base image dependencies.",
+                                    "properties": {
+                                        "baseImageTriggerType": {
+                                            "description": "The type of the auto trigger for base image dependency updates.",
+                                            "enum": [
+                                                "All",
+                                                "Runtime"
+                                            ],
+                                            "type": "string",
+                                            "x-ms-enum": {
+                                                "modelAsString": true,
+                                                "name": "BaseImageTriggerType"
+                                            }
+                                        },
+                                        "name": {
+                                            "description": "The name of the trigger.",
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "description": "The current status of trigger.",
+                                            "enum": [
+                                                "Disabled",
+                                                "Enabled"
+                                            ],
+                                            "type": "string",
+                                            "x-ms-enum": {
+                                                "modelAsString": true,
+                                                "name": "TriggerStatus"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "name"
+                                    ],
+                                    "type": "object"
+                                },
+                                "sourceTriggers": {
+                                    "description": "The collection of triggers based on source code repository.",
+                                    "items": {
+                                        "description": "The properties for updating a source based trigger.",
+                                        "properties": {
+                                            "name": {
+                                                "description": "The name of the trigger.",
+                                                "type": "string"
+                                            },
+                                            "sourceRepository": {
+                                                "description": "The properties that describes the source(code) for the task.",
+                                                "properties": {
+                                                    "branch": {
+                                                        "description": "The branch name of the source code.",
+                                                        "type": "string"
+                                                    },
+                                                    "repositoryUrl": {
+                                                        "description": "The full URL to the source code repository",
+                                                        "type": "string"
+                                                    },
+                                                    "sourceControlAuthProperties": {
+                                                        "description": "The authorization properties for accessing the source code repository and to set up\r\nwebhooks for notifications.",
+                                                        "properties": {
+                                                            "expiresIn": {
+                                                                "description": "Time in seconds that the token remains valid",
+                                                                "format": "int32",
+                                                                "type": "integer"
+                                                            },
+                                                            "refreshToken": {
+                                                                "description": "The refresh token used to refresh the access token.",
+                                                                "type": "string"
+                                                            },
+                                                            "scope": {
+                                                                "description": "The scope of the access token.",
+                                                                "type": "string"
+                                                            },
+                                                            "token": {
+                                                                "description": "The access token used to access the source control provider.",
+                                                                "type": "string"
+                                                            },
+                                                            "tokenType": {
+                                                                "description": "The type of Auth token.",
+                                                                "enum": [
+                                                                    "PAT",
+                                                                    "OAuth"
+                                                                ],
+                                                                "type": "string",
+                                                                "x-ms-enum": {
+                                                                    "modelAsString": true,
+                                                                    "name": "TokenType"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "sourceControlType": {
+                                                        "description": "The type of source control service.",
+                                                        "enum": [
+                                                            "Github",
+                                                            "VisualStudioTeamService"
+                                                        ],
+                                                        "type": "string",
+                                                        "x-ms-enum": {
+                                                            "modelAsString": true,
+                                                            "name": "SourceControlType"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            },
+                                            "sourceTriggerEvents": {
+                                                "description": "The source event corresponding to the trigger.",
+                                                "items": {
+                                                    "enum": [
+                                                        "commit",
+                                                        "pullrequest"
+                                                    ],
+                                                    "type": "string",
+                                                    "x-ms-enum": {
+                                                        "modelAsString": true,
+                                                        "name": "SourceTriggerEvent"
+                                                    }
+                                                },
+                                                "type": "array"
+                                            },
+                                            "status": {
+                                                "description": "The current status of trigger.",
+                                                "enum": [
+                                                    "Disabled",
+                                                    "Enabled"
+                                                ],
+                                                "type": "string",
+                                                "x-ms-enum": {
+                                                    "modelAsString": true,
+                                                    "name": "TriggerStatus"
+                                                }
+                                            }
+                                        },
+                                        "required": [
+                                            "name"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "tags": {
+                    "additionalProperties": {
+                        "type": "string"
+                    },
+                    "description": "The ARM resource tags.",
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "api_version": {
+            "required": true,
+            "type": "string"
+        }
+    }
+}

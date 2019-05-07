@@ -1,0 +1,270 @@
+{
+    "title": "ContainerRegistryManagementClient",
+    "docsUrl": "",
+    "url": "https://api.apis.guru/v2/specs/azure.com/containerregistry-containerregistry_build/2018-09-01/swagger.json",
+    "envVars": {
+        "OAUTH_CLIENT_ID": {
+            "description": "OAuth Client ID"
+        },
+        "OAUTH_CLIENT_SECRET": {
+            "description": "OAuth Client Secret"
+        }
+    },
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "https://management.azure.com/",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            },
+            "azure_auth": {
+                "label": "Azure Active Directory OAuth2 Flow",
+                "viewClass": "OAuthFieldView"
+            }
+        },
+        "oauth2": {
+            "client_id": "{{OAUTH_CLIENT_ID}}",
+            "client_secret": "{{OAUTH_CLIENT_SECRET}}",
+            "auth_uri": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "Registries_GetBuildSourceUploadUrl": {
+            "main": "./lib/actions/Registries_GetBuildSourceUploadUrl.js",
+            "title": "Get the upload location for the user to be able to upload the source.",
+            "description": "Get the upload location for the user to be able to upload the source.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Registries_GetBuildSourceUploadUrl.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Runs_List": {
+            "main": "./lib/actions/Runs_List.js",
+            "title": "Gets all the runs for a registry.",
+            "description": "Gets all the runs for a registry.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Runs_List.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Runs_Get": {
+            "main": "./lib/actions/Runs_Get.js",
+            "title": "Gets the detailed information for a given run.",
+            "description": "Gets the detailed information for a given run.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Runs_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Runs_Update": {
+            "main": "./lib/actions/Runs_Update.js",
+            "title": "Patch the run properties.",
+            "description": "Patch the run properties.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Runs_Update.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Runs_Cancel": {
+            "main": "./lib/actions/Runs_Cancel.js",
+            "title": "Cancel an existing run.",
+            "description": "Cancel an existing run.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Runs_Cancel.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Runs_GetLogSasUrl": {
+            "main": "./lib/actions/Runs_GetLogSasUrl.js",
+            "title": "Gets a link to download the run logs.",
+            "description": "Gets a link to download the run logs.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Runs_GetLogSasUrl.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Registries_ScheduleRun": {
+            "main": "./lib/actions/Registries_ScheduleRun.js",
+            "title": "Schedules a new run based on the request parameters and add it to the run queue.",
+            "description": "Schedules a new run based on the request parameters and add it to the run queue.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Registries_ScheduleRun.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Tasks_List": {
+            "main": "./lib/actions/Tasks_List.js",
+            "title": "Lists all the tasks for a specified container registry.",
+            "description": "Lists all the tasks for a specified container registry.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Tasks_List.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Tasks_Delete": {
+            "main": "./lib/actions/Tasks_Delete.js",
+            "title": "Deletes a specified task.",
+            "description": "Deletes a specified task.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Tasks_Delete.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Tasks_Get": {
+            "main": "./lib/actions/Tasks_Get.js",
+            "title": "Get the properties of a specified task.",
+            "description": "Get the properties of a specified task.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Tasks_Get.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Tasks_Update": {
+            "main": "./lib/actions/Tasks_Update.js",
+            "title": "Updates a task with the specified parameters.",
+            "description": "Updates a task with the specified parameters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Tasks_Update.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Tasks_Create": {
+            "main": "./lib/actions/Tasks_Create.js",
+            "title": "Creates a task for a container registry with the specified parameters.",
+            "description": "Creates a task for a container registry with the specified parameters.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Tasks_Create.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "Tasks_GetDetails": {
+            "main": "./lib/actions/Tasks_GetDetails.js",
+            "title": "Returns a task with extended information that includes all secrets.",
+            "description": "Returns a task with extended information that includes all secrets.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/Tasks_GetDetails.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}
